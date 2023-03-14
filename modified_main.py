@@ -26,6 +26,44 @@ st.caption("Select the coordinates in map by clicking the arrow icon")
 st.header('Select points on map')
 st.map()
 
+import streamlit as st
+import folium as f
+from streamlit_folium import st_folium
+import ast
+import pandas as pd
+
+hub_list = []
+header = st.container()
+map = st.container()
+download = st.container()
+
+with header:
+    st.title('Clicky Map...')
+
+with map:
+    m = f.Map(location=[48.1488436, 11.5680386], zoom_start=15)
+    m.add_child(f.ClickForMarker(popup="Hub"))
+    st_data = st_folium(m, width=725)
+
+    if st_data.last_clicked:
+        last_clicked_str = str(st_data.last_clicked)
+        last_clicked_dict = ast.literal_eval(last_clicked_str)
+        hub_lat = last_clicked_dict['lat']
+        hub_lon = last_clicked_dict['lng']
+        hub_dict = {'lat': hub_lat, 'lon': hub_lon}
+        hub_list.append(hub_dict)
+        f.Marker(location=[hub_lat, hub_lon], popup='Hub').add_to(m)
+
+with download:
+    if len(hub_list) > 0:
+        st.write(f"### {len(hub_list)} point(s) selected:")
+        df = pd.DataFrame(hub_list, columns=['lat', 'lon'])
+        st.dataframe(df)
+
+        csv = df.to_csv(index=False)
+        b64 = base64.b64encode(csv.encode()).decode()
+        href = f'<a href="data:file/csv;base64,{b64}" download="selected_points.csv">Download CSV</a>'
+        st.markdown(href, unsafe_allow_html=True)
 
    
 col_A, col_B=st.columns(2)
