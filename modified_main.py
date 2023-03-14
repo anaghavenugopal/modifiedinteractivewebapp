@@ -21,6 +21,21 @@ file = st.file_uploader("Upload the input csv file", type=["csv"])
     ##st.write(result)
     
 st.caption("Select the coordinates in map by clicking the arrow icon")
+----------------------------------------------------------------------------
+# Show map
+st.header('Select points on map')
+st.map()
+
+# Get selected points and write to CSV file
+if st.button('Save selected points'):
+    selected_points = st.session_state.map_clicked_at
+    if selected_points:
+        point_df = pd.DataFrame(selected_points, columns=['id', 'lat', 'lon'])
+        point_df.to_csv('selected_points.csv', index=False)
+        st.success('Selected points saved to selected_points.csv')
+    else:
+        st.warning('No points selected')
+--------------------------------------------------------------------------------        
 col_A, col_B=st.columns(2)
 with col_A:
     st.button("Run and View Analysis")
