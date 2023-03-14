@@ -26,6 +26,11 @@ st.caption("Select the coordinates in map by clicking the arrow icon")
 st.header('Select points on map')
 st.map()
 
+import streamlit as st
+import folium as f
+from streamlit_folium import st_folium
+import ast
+
 hub_list = []
 header = st.container()
 map = st.container()
@@ -46,6 +51,7 @@ with map:
         print(hub_list)
 
 print(len(hub_list))
+
    
 col_A, col_B=st.columns(2)
 with col_A:
