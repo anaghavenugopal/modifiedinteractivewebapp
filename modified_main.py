@@ -26,31 +26,6 @@ st.caption("Select the coordinates in map by clicking the arrow icon")
 st.header('Select points on map')
 st.map()
 
-import streamlit as st
-import folium as f
-from streamlit_folium import st_folium
-import ast
-
-hub_list = []
-header = st.container()
-map = st.container()
-
-with header:
-    st.title('Clicky Map...')
-
-with map:
-    m = f.Map(location=[48.1488436, 11.5680386], zoom_start=15)
-    st_data = st_folium(m, width=725)
-
-    # Define an event listener that gets triggered each time the user clicks on the map
-    # and adds the clicked location to the hub_list.
-    @st_data.add_clicks
-    def handle_clicks(lat, lon):
-        hub_dict = {'lat': lat, 'lon': lon}
-        hub_list.append(hub_dict)
-        print(hub_list)
-
-print(len(hub_list))
 
    
 col_A, col_B=st.columns(2)
