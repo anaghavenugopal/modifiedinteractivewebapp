@@ -21,7 +21,7 @@ file = st.file_uploader("Upload the input csv file", type=["csv"])
     ##st.write(result)
     
 st.caption("Select the coordinates in map by clicking the arrow icon")
-#----------------------------------------------------------------------------
+
 # Show map
 st.header('Select points on map')
 st.map()
@@ -35,7 +35,7 @@ if st.button('Save selected points'):
         st.success('Selected points saved to selected_points.csv')
     else:
         st.warning('No points selected')
-#--------------------------------------------------------------------------------        
+   
 col_A, col_B=st.columns(2)
 with col_A:
     st.button("Run and View Analysis")
